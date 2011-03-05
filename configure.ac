@@ -56,7 +56,7 @@ yes)
   ;;
 esac
 
-
+AC_DEFINE(POSIX, 1, [Using configure means POSIX])
 
 AC_ARG_ENABLE(gc,
   [  --enable-gc          enable garbage collection (default=no)],
@@ -74,7 +74,7 @@ esac
 
 # Conditions
 
-TARGET=$host_os
+TARGET="posix"
 AC_SUBST(TARGET)
 
 # Checks for library functions.

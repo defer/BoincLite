@@ -41,6 +41,7 @@ unsigned int boincConfigurationGetOSName(char * str, unsigned int max_size, Boin
 unsigned int boincConfigurationGetNCpu(char * str, unsigned int max_size, BoincConfiguration * conf) 
 {
 #ifdef __APPLE__
+  //TODO: add an appropriate core count
   return 1;
 #else
   return boincGetStringFromExec(str, max_size, "grep processor /proc/cpuinfo | wc -l");
@@ -53,7 +54,7 @@ unsigned int boincConfigurationGetPlatformName(char* str, unsigned int max_size,
   #if defined(__i386__)
     return strlen(strcpy(str, "i686-apple-darwin"));
   #else
-    #error Unsupported platform
+    return strlen(strcpy(str, "x86_64-apple-darwin"));
   #endif
 #elif defined(__linux__)
   #if defined(__i386__)
@@ -123,7 +124,7 @@ unsigned int boincConfigurationGetHostIpAddress(char * str, unsigned int max_siz
 unsigned int boincConfigurationGetHostCpuVendor(char * str, unsigned int max_size, BoincConfiguration * conf) 
 { 
 #if defined(__APPLE__)
-  #if defined(__i386__)
+  #if defined(__i386__) || defined(__amd64__)
     return strlen(strcpy(str, "Intel"));
   #endif
 #elif defined(__linux__)
@@ -136,7 +137,7 @@ unsigned int boincConfigurationGetHostCpuVendor(char * str, unsigned int max_siz
 unsigned int boincConfigurationGetHostCpuModel(char * str, unsigned int max_size, BoincConfiguration * conf) 
 { 
 #if defined(__APPLE__)
-  #if defined(__i386__)
+  #if defined(__i386__) || defined(__amd64__)
     const char* value = "Intel";
     strcat(str, value);
     return strlen(value);
@@ -155,7 +156,7 @@ unsigned int boincConfigurationGetHostCpuModel(char * str, unsigned int max_size
 unsigned int boincConfigurationGetHostCpuFeatures(char * str, unsigned int max_size, BoincConfiguration * conf) 
 { 
 #if defined(__APPLE__)
-  #if defined(__i386__)
+  #if defined(__i386__) || defined(__amd64__)
     const char* value = "Intel";
     strcat(str, value);
     return strlen(value);
